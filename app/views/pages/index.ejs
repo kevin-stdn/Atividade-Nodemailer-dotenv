@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contato</title>
+</head>
+<body>
+
+    <% if (erros && erros.length > 0) { %>
+        <h1><%= erros.msg %></h1>
+   <% } %>
+
+       <% if (sucesso) { %>
+        <h1><%= sucesso %></h1>
+   <% } %>
+    <form action="/contato" method="post">
+        <label for="id-nome">Nome:</label>
+        <input type="text" name="nome" id="id-nome" placeholder="Seu nome" value="<%= valores.nome %>">
+
+        <label for="id-email">Email:</label>
+        <input type="email" name="email" id="id-email" placeholder="seu@email.com" value="<%= valores.email %>">
+
+        <label for="id-telefone">Telefone:</label>
+        <input type="tel" name="telefone" id="id-telefone"  placeholder="(XX) XXXXX-XXXX" value="<%= valores.telefone %>">
+
+
+        <label for="id-assunto">Assunto:</label>
+        <input type="text" name="assunto" id="id-assunto" placeholder="Assunto da mensagem" value="<%= valores.assunto %>">
+
+        
+        <label for="id-mensagem">Mensagem:</label>
+        <textarea name="mensagem" id="id-mensagem"  placeholder="Escreva sua mensagem..." value="<%= valores.mensagem %>"></textarea>
+        
+        <button type="submit">Enviar</button>
+    </form>
+</body>
+</html>
