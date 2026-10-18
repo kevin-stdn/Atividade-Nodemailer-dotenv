@@ -1,37 +1,19 @@
-const dotenv = require("dotenv").config();
-const express = require("express");
+const dotenv = require('dotenv').config();
+const express = require('express');
 const app = express();
-const nodemailer = require("nodemailer")
 
-//indicação de pasta de aruivos estáticos - css, js, img 
+const PORT = process.env.APP_PORT
+
 app.use(express.static("./app/public"));
-
-//configuar o ejs como mecanismo de renderização
-app.set("view engine","ejs");
-//configurar a pasta das views - html->ejs
+app.set('view engine', 'ejs');
 app.set("views","./app/views");
 
-
-//SEMPRE ANTES DA REQUISIÇÃO DAS ROTAS
-//consfiguar o envio de dados e analise de dados na requisição
-//configurar o payload para formato JSON (API)
 app.use(express.json());
-//consfiguar o payload para formato URLencoded - (form html -> array, objeto, json)
-app.use(express.urlencoded({extended:true}));
+app.use(express.urlencoded({ extended: true }));
 
+const rotas = require('./app/routes/router');
+app.use('/', rotas);
 
-//requisitar arquivos de rotas
-const rota = require("./app/routes/router");
-// indicar o local de uso das rotas
-app.use("/", rota);
-// ("/") indica a raiz do site 
-// http://localhost:3000
-
-
-
-
-//iniciar o servidor
-app.listen(process.env.APP_PORT, ()=>{
-    console.log(`Servidor on-line \nhttp://localhost:${process.env.APP_PORT}`)
-})
-
+app.listen(PORT, () => {
+    console.log(`Servidor rodando com sucesso em http://localhost:${PORT}`);
+});

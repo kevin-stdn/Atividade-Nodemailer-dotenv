@@ -1,38 +1,52 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contato</title>
+    <title>Formulário de Contato</title>
+    <style>
+        .error { color: red; font-size: 14px; margin-top: 5px; }
+        .success { color: green; font-weight: bold; margin-bottom: 15px; }
+    </style>
 </head>
 <body>
+    <div class="container">
+        <h2>Fale Conosco</h2>
 
-    <% if (erros && erros.length > 0) { %>
-        <h1><%= erros.msg %></h1>
-   <% } %>
+        <% if (typeof sucesso !== 'undefined' && sucesso) { %>
+            <p class="success">E-mail enviado com sucesso!</p>
+        <% } %>
 
-       <% if (sucesso) { %>
-        <h1><%= sucesso %></h1>
-   <% } %>
-    <form action="/contato" method="post">
-        <label for="id-nome">Nome:</label>
-        <input type="text" name="nome" id="id-nome" placeholder="Seu nome" value="<%= valores.nome %>">
+        <form action="/enviar" method="POST">
+            <label for="nome">Nome:</label>
+            <input type="text" id="nome" name="nome" value="<%= typeof oldData !== 'undefined' ? oldData.nome : '' %>">
+            <% if (typeof errors !== 'undefined' && errors.nome) { %>
+                <div class="error"><%= errors.nome.msg %></div>
+            <% } %>
 
-        <label for="id-email">Email:</label>
-        <input type="email" name="email" id="id-email" placeholder="seu@email.com" value="<%= valores.email %>">
+            <label for="email">E-mail:</label>
+            <input type="email" id="email" name="email" value="<%= typeof oldData !== 'undefined' ? oldData.email : '' %>">
+            <% if (typeof errors !== 'undefined' && errors.email) { %>
+                <div class="error"><div class="error"><%= errors.email.msg %></div></div>
+            <% } %>
 
-        <label for="id-telefone">Telefone:</label>
-        <input type="tel" name="telefone" id="id-telefone"  placeholder="(XX) XXXXX-XXXX" value="<%= valores.telefone %>">
+            <label for="telefone">Telefone:</label>
+            <input type="text" id="telefone" name="telefone" value="<%= typeof oldData !== 'undefined' ? oldData.telefone : '' %>">
 
+            <label for="assunto">Assunto:</label>
+            <input type="text" id="assunto" name="assunto" value="<%= typeof oldData !== 'undefined' ? oldData.assunto : '' %>">
+            <% if (typeof errors !== 'undefined' && errors.assunto) { %>
+                <div class="error"><%= errors.assunto.msg %></div>
+            <% } %>
 
-        <label for="id-assunto">Assunto:</label>
-        <input type="text" name="assunto" id="id-assunto" placeholder="Assunto da mensagem" value="<%= valores.assunto %>">
+            <label for="mensagem">Mensagem:</label>
+            <textarea id="mensagem" name="mensagem" rows="4"><%= typeof oldData !== 'undefined' ? oldData.mensagem : '' %></textarea>
+            <% if (typeof errors !== 'undefined' && errors.mensagem) { %>
+                <div class="error"><%= errors.mensagem.msg %></div>
+            <% } %>
 
-        
-        <label for="id-mensagem">Mensagem:</label>
-        <textarea name="mensagem" id="id-mensagem"  placeholder="Escreva sua mensagem..." value="<%= valores.mensagem %>"></textarea>
-        
-        <button type="submit">Enviar</button>
-    </form>
+            <button type="submit">Enviar</button>
+        </form>
+    </div>
 </body>
 </html>
